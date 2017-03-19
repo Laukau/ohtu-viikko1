@@ -1,5 +1,6 @@
 package ohtu.ohtuvarasto;
 
+import com.sun.tracing.dtrace.ArgsAttributes;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -28,6 +29,18 @@ public class VarastoTest {
     @Test
     public void uudellaVarastollaOikeaTilavuus() {
         assertEquals(10, varasto.getTilavuus(), vertailuTarkkuus);
+    }
+
+    @Test
+    public void konstruktorinNegatiivinenArvoLuoKayttokelvottomanVaraston() {
+        nollaVarasto = new Varasto(-1);
+        assertEquals(0, varasto.getSaldo(), varasto.getTilavuus);
+    }
+
+    @Test
+    public void konstruktorinNegatiivisellaArvollaOnNollaSaldo() {
+        nollaVarasto = new Varasto(0, 5);
+        assertEquals(0, varasto.getSaldo(), varasto.getTilavuus());
     }
 
     @Test
@@ -65,4 +78,17 @@ public class VarastoTest {
         assertEquals(4, varasto.paljonkoMahtuu(), vertailuTarkkuus);
     }
 
+    @Test
+    public void eiVoiLisataYliTilavuuden() {
+        varasto.lisaaVarastoon(11);
+
+        assertEquals(varasto.getSaldo(), varasto.getTilavuus());
+    }
+
+    @Test
+    public void ottaminenEiVieSaldoaNegatiiviseksi() {
+        varasto.otaVarastosta(11);
+
+        assertEquals(varasto.getSaldo(), 0);
+    }
 }
